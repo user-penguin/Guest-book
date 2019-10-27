@@ -10,9 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
- * @ORM\EntityListeners({"App\EventListener\UserListener"})
- * @UniqueEntity(fields={"username"}, message="Данное имя уже занято, используйте другое")
  */
 class User implements UserInterface
 {
@@ -98,7 +97,7 @@ class User implements UserInterface
     /**
      * @return string|null The encoded password if any
      */
-    public function getPassword() : string
+    public function getPassword() : ?string
     {
         return $this->plainPassword;
     }
