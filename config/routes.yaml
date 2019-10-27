@@ -9,3 +9,7 @@ login:
 registration:
   path: /registration
   controller: App\Controller\CredentialController::registration
+
+logout:
+  path: /logout
+  controller: App\Controller\CredentialController::logout

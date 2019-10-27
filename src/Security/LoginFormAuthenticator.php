@@ -49,6 +49,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getCredentials(Request $request)
     {
+//        dd($request->request);
         $credentials = [
             'username' => $request->request->get('username'),
             'plainPassword' => $request->request->get('plainPassword'),
@@ -56,7 +57,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials['username']
         );
 
         return $credentials;
@@ -73,7 +74,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
 
         return $user;
@@ -81,7 +82,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['plainPassword']);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

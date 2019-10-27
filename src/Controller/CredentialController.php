@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Type\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,12 @@ class CredentialController extends AbstractController
         return $this->render('index.html.twig');
     }
 
-    public function registration(Request $request)
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function registration(Request $request, EntityManagerInterface $em)
     {
         /**
          * @var User $user
@@ -34,6 +40,15 @@ class CredentialController extends AbstractController
 
         $regForm = $this->createForm(UserType::class, $user);
         $regForm->handleRequest($request);
+
+        if ($regForm->isSubmitted() && $regForm->isValid()) {
+
+            $user->setRoles(["user"]);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('login');
+        }
 
         return $this->render('registration.html.twig', [
             'form' => $regForm->createView(),
@@ -56,5 +71,10 @@ class CredentialController extends AbstractController
                 'last_username' => $lastUsername,
                 'error' => $error
                 ]);
+    }
+
+
+    public function logout()
+    {
     }
 }
