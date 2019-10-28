@@ -16,15 +16,11 @@
                         <li>Дата: {{ event.date | date() }}</li>
                         <li>Описание: {{ event.description }}</li>
                         <li>Запись создана: {{ event.createdAt | date() }}</li>
-                        {% if event.reviews is defined %}
-                            <li>Отзывов: {{ event.reviews }}</li>
-                        {% else %}
-                            <li>Отзывов: 0</li>
-                        {% endif %}
+                        <li>Отзывов: {{ getReviewsCount(event.id) }}</li>
                     </ul>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="{{ path('view_event', {'eventId': event.id}) }}">
                         <button class="btn btn-primary btn-sm float-right" style="margin-bottom: 20px;margin-right: 20px">
                             Подробнее
                         </button>

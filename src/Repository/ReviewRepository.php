@@ -55,6 +55,7 @@ class ReviewRepository extends ServiceEntityRepository
      */
     public function getCountOfRecords(int $eventId)
     {
+        dump($eventId);
         $qb = $this->createQueryBuilder('r');
 
         $count = $qb
@@ -72,6 +73,10 @@ class ReviewRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult()
         ;
+
+        if (!isset($count[0]['count'])) {
+            return 0;
+        }
 
         return $count[0]['count'];
     }

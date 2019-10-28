@@ -3,7 +3,37 @@
 {% block title %} Страница мероприятия {% endblock %}
 
 {% block body %}
+    <div class="card-body" style="background-color: #bc9897">
+        <div>{{ event.name }}</div>
+        <div>{{ event.date | date() }}</div>
+        <div style="margin-bottom: 20px;">{{ event.description }}</div>
+    </div>
 
+    {% if is_granted('ROLE_USER') %}
+    <div style="margin: 10px;">Оставьте свой комментарий</div>
+    {{ form(form) }}
+    {% endif %}
 
+    <div class="mx-auto" style="width: 600px">
+    {% for review in allReviews %}
+        <div class="card">
+            <div class="card-body">
+                <ul>
+                    <li>Текст: {{ review.text }}</li>
+                    <li>Рейтинг: {{ review.rate }}</li>
+                    <li>Юзер: {{ review.username }}</li>
+                </ul>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% set max = allPages|number_format() %}
+            {% for i in range(1,  max) %}
+                <a class="page-link" href="{{ path('view_event', {'page': i, 'eventId': event.id}) }}">{{ i }}</a>
+            {% endfor %}
+        </ul>
+    </nav>
 
 {%  endblock %}

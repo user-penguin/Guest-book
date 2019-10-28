@@ -21,9 +21,6 @@ class ReviewType extends AbstractType
                 'label' => 'Рейтинг',
             ])
             ->add('text', TextType::class, [
-                'attr' => [
-                    'style' => 'height: 50px;',
-                ],
                 'label' => 'Комментарий',
             ])
             ->add('submit', SubmitType::class, [
