@@ -17,17 +17,23 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Название',
+            ])
             ->add('description', TextType::class, [
                 'required' => false,
+                'label' => 'Описание',
             ])
             ->add('date', DateType::class   , [
                 'required' => false,
+                'label' => 'Дата проведения',
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-secondary',
-                ]
+                    'style' => 'margin: 10px;'
+                ],
+                'label' => 'Сохранить',
             ])
         ;
     }

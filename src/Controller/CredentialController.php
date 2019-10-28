@@ -4,9 +4,11 @@
 namespace App\Controller;
 
 
+use App\Entity\Event;
 use App\Entity\User;
 use App\Type\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +20,28 @@ class CredentialController extends AbstractController
 
     /**
      * @param Security $security
+     * @param EntityManagerInterface $em
+     * @param int $page
      * @return Response
      */
-    public function index(Security $security)
+    public function index(Security $security, EntityManagerInterface $em, int $page = 1)
     {
-        dump($security->getUser());
-        return $this->render('index.html.twig');
+        $paginationSize = 5;
+        $eventRepo = $em->getRepository(Event::class);
+        dump($eventRepo->getCountOfRecords());
+
+        $events = $eventRepo->getEventsForPagination($paginationSize, $page);
+        $countOfRecords = intval($eventRepo->getCountOfRecords());
+
+        $allPages = $countOfRecords / $paginationSize;
+        if ($countOfRecords % ($paginationSize) > 0 && $countOfRecords > $paginationSize) {
+            $allPages++;
+        }
+
+        return $this->render('index.html.twig', [
+            'events' => $events,
+            'allPages' => $allPages,
+        ]);
     }
 
     /**

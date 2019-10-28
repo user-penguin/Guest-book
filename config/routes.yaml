@@ -1,5 +1,5 @@
 index:
-  path: /
+  path: /{page<\d+>?1}
   controller: App\Controller\CredentialController::index
 
 login:
@@ -18,6 +18,14 @@ logout:
 create_event:
   path: /event/create
   controller: App\Controller\EventController::createEvent
+
+delete_event:
+  path: /event/delete/{eventId<\d+>}
+  controller: App\Controller\EventController::deleteEvent
+
+edit_event:
+  path: /event/edit/{eventId<\d+>}
+  controller: App\Controller\EventController::editEvent
 
 
 create_review:

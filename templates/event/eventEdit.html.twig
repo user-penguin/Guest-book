@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Редактирование события {% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+    <a href="{{ path('index') }}">
+        <button class="btn btn-secondary" style="margin-right: 5px">
+            Назад
+        </button>
+    </a>
+
+{% endblock %}
