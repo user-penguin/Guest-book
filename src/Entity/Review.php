@@ -64,6 +64,44 @@ class Review
         return $this->id;
     }
 
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event|null $event
+     * @return Review
+     */
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return Review
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
