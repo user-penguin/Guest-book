@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Review
 {
+    public function __construct()
+    {
+        $this->createdAt = new DateTime('now');
+        $this->updatedAt = new DateTime('now');
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -31,11 +38,13 @@ class Review
     private $user;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;

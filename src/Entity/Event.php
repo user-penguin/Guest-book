@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +10,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Event
 {
+    public function __construct()
+    {
+        $this->createdAt = new DateTime('now');
+        $this->updatedAt = new DateTime('now');
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var Review[]|null
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="event", cascade={"persist", "remove"})
+     */
+    private $reviews;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=500, nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -27,11 +46,13 @@ class Event
     private $date;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -40,6 +61,43 @@ class Event
     {
         return $this->id;
     }
+
+    /**
+     * @return Review[]|null
+     */
+    public function getReviews(): ?array
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param Review[]|null $reviews
+     * @return Event
+     */
+    public function setReviews(?array $reviews): self
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+
 
     public function getName(): ?string
     {

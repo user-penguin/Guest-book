@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,6 +16,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime('now');
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,6 +33,12 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
+
+    /**
+     * @var Review[]|null
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $reviews;
 
     /**
      * @var string The hashed password
@@ -45,12 +58,47 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private  $createdAt;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @return Review[]|null
+     */
+    public function getReviews(): ?array
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param Review[]|null $reviews
+     * @return User
+     */
+    public function setReviews(?array $reviews): self
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+
 
     /**
      * @return string|null
