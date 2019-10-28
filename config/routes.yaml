@@ -27,6 +27,10 @@ edit_event:
   path: /event/edit/{eventId<\d+>}
   controller: App\Controller\EventController::editEvent
 
+view_event:
+  path: /event/{eventId<\d+>}/{page<\d+>?1}
+  controller: App\Controller\EventController::viewEvent
+
 
 create_review:
   path: /event/{eventId}/create_review
