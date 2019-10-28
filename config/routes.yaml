@@ -13,3 +13,13 @@ registration:
 logout:
   path: /logout
   controller: App\Controller\CredentialController::logout
+
+
+create_event:
+  path: /event/create
+  controller: App\Controller\EventController::createEvent
+
+
+create_review:
+  path: /event/{eventId}/create_review
+  controller: App\Controller\ReviewController::createReview
